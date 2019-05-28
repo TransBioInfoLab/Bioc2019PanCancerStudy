@@ -135,7 +135,7 @@ BRCARnaseqSE <- GDCprepare(query_down, directory = DataDir)
 ```
 
 
-Next, the `TCGAanalyze_Preprocessing()` function performs Array-Array Intensity correlation (AAIC). It defines a square symmetric matrix of Spearman correlations among samples. According this matrix and boxplot of correlation samples by samples it is possible to find samples with low correlation that can be identified as possible outliers. The `cor.cut` controls ... **ANTONIO EDIT HERE**. (Rather than require that you execute the above code, we have included the output as the `BRCARnaseqSE` object.)
+Next, the `TCGAanalyze_Preprocessing()` function performs Array-Array Intensity correlation (AAIC). It defines a square symmetric matrix of Spearman correlations among samples. According this matrix and boxplot of correlation samples by samples it is possible to find samples with low correlation that can be identified as possible outliers. The `cor.cut` controls ... ** to update ANTONIO EDIT HERE**. (Rather than require that you execute the above code, we have included the output as the `BRCARnaseqSE` object.)
 ```{r }
 data("BRCARnaseqSE")
 
