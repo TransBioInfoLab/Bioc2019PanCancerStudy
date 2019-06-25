@@ -910,8 +910,9 @@ include_graphics(file.path(FiguresPath, "Validation_mRNASi_IHEC.png"))
 ```{r, eval = FALSE}
 # Firstly we load Gene Expression matrix (genes in rows , samples in columns) 
 # from a previous generated pancancer gene expression matrix
-
-load("./dataFilt_panCancer33new.Rdata")
+require(TCGAbiolinks)
+# https://github.com/torongs82/Data/blob/master/TCGA/BRCA_exp.rda
+load("BRCA_exp.rda")
 
 curCancer <- "BRCA"
 # We have previously generated a table with 33 cancer types barcodes and molecular subtypes.
@@ -925,6 +926,8 @@ dataSubt_curCancer <- dataSubt_PanCancer[dataSubt_PanCancer$cancer.type %in% "BR
 commonSamples <- intersect(dataSubt_curCancer$pan.samplesID, colnames(dataFilt))
 
 dataFilt_curCancer <- dataFilt[,commonSamples]
+
+
 load("./PCBC_stemSig.rda")
 
 TCGA_mRNA_StemScoreTable <- TCGAanalyze_Stemness(stemSig = PCBC_stemSig,
@@ -1010,6 +1013,10 @@ include_graphics(file.path(FiguresPath, "TCGA_BRCA_mRNASi_subtypes.png"))
 ### Generating Stemness score for TCGA LGG and GBM gene expression data (mRNASi). Malta et al. (2018, PMID: 29625051)
 
 ```{r, eval = FALSE}
+# https://github.com/torongs82/Data/blob/master/TCGA/LGG_GBM_exp.rda
+
+load("LGG_GBM_exp.rda")
+
 
 # working with LGG and GBM
 curCancer <- c("LGG","GBM")
@@ -1084,6 +1091,16 @@ tabSi[tabSi$mRNASi > quantile(tabSi$mRNASi,2/3),"mRNASi_level"] <- "mRNASi High"
 
 dataClin_LGG <- GDCquery_clinic(project = "TCGA-LGG",type = "clinical")
 dataClin_GBM <- GDCquery_clinic(project = "TCGA-GBM",type = "clinical")
+
+dataClin_LGG <- subset(dataClin_LGG,
+                       select = c("submitter_id","vital_status", 
+                                  "days_to_death", "days_to_last_follow_up"))
+
+dataClin_GBM <- subset(dataClin_GBM,
+                       select = c("submitter_id","vital_status", 
+                                  "days_to_death", "days_to_last_follow_up"))
+
+
 
 dataClin_LGG_GBM <- rbind(dataClin_LGG,dataClin_GBM)
 
